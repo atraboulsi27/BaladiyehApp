@@ -10,7 +10,7 @@ class News extends StatefulWidget {
 }
 class _NewsState extends State<News> {
   Future<List<Article>> _getNews() async {
-    var data = await http.get('http://newsapi.org/v2/everything?q=corona&from=2020-02-24&sortBy=publishedAt&apiKey=7416c19f810740c0ae185eb497a7a4cc');
+    var data = await http.get('http://newsapi.org/v2/everything?q=corona&from=2020-03-24&sortBy=publishedAt&apiKey=7416c19f810740c0ae185eb497a7a4cc');
     var jsonData = json.decode(data.body);
     List<Article> articles = [];
     for (var u in jsonData['articles']) {

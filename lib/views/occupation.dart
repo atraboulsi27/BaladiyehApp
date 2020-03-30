@@ -12,7 +12,7 @@ class BusinessDirectory extends StatefulWidget {
 }
 class _BusinessDirectoryState extends State<BusinessDirectory> {
   Future<List<Professional>> _getUsers() async {
-    var data = await http.get('http://www.json-generator.com/api/json/get/cfBZjrRMMO?indent=2');
+    var data = await http.get('http://www.json-generator.com/api/json/get/bUQkuEOaaa?indent=2');
     var jsonData = json.decode(data.body);
     List<Professional> professionalsList = [];
     for (var professionalJson in jsonData) {

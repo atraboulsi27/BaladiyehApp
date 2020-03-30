@@ -112,6 +112,7 @@ class _ComplaintsState extends State<Complaints> {
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Password'),
           keyboardType: TextInputType.visiblePassword,
+          obscureText: true,
           onSaved: (String val) {
             _pass = val;
           },
@@ -119,7 +120,7 @@ class _ComplaintsState extends State<Complaints> {
         new RaisedButton(
           onPressed: () async {
             _formKey.currentState.save();
-            await sendMail(_mail, _pass, _subject, _textFieldController);
+            await sendMail(_mail, _pass, _subject, _textFieldController.text, _name, _mobile);
           },
           child: new Text('Send Complaint'),
         ),
@@ -152,13 +153,13 @@ class _ComplaintsState extends State<Complaints> {
   }
   
   String validateMobile(String value) {
-    if (value.length != 9)
-      return 'Mobile Number must be of 9 digits';
+    if (value.length != 8)
+      return 'Mobile Number must be of 8 digits';
     else
       return null;
   }
 
-  Future<List> sendMail(mail, password, subject, content) async {
+  Future<List> sendMail(mail, password, subject, content, name, phone) async {
 
     final smtpServer = gmail(mail, password); 
 
@@ -166,7 +167,7 @@ class _ComplaintsState extends State<Complaints> {
       ..from = Address(mail)
       ..recipients.add('charbel.g.frangieh@gmail.com')
       ..subject = subject
-      ..text = '$subject \n Best Regards \n ${DateTime.now()}';
+      ..text = '$content \nBest Regards \n$name \n$phone \n${DateTime.now()}';
 
     try {
       final sendReport = await send(message, smtpServer);

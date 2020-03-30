@@ -53,11 +53,11 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: GestureDetector(
                   onTap:() {
-                    Navigator.push(context, 
-                      new MaterialPageRoute(
-                        builder: (context) => Forms()
-                      )
-                    );
+                    // Navigator.push(context, 
+                    //   new MaterialPageRoute(
+                    //     builder: (context) => Forms()
+                    //   )
+                    // );
                   },
                   child: buttonCard("Taxes", Icons.monetization_on),
                 )
@@ -83,11 +83,11 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: GestureDetector(
                   onTap:() {
-                    Navigator.push(context, 
-                      new MaterialPageRoute(
-                        builder: (context) => News()
-                      )
-                    );
+                    // Navigator.push(context, 
+                    //   new MaterialPageRoute(
+                    //     builder: (context) => News()
+                    //   )
+                    // );
                   },
                   child: buttonCard("Municipal Board", Icons.account_balance),
                 )
@@ -113,11 +113,11 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: GestureDetector(
                   onTap:() {
-                    Navigator.push(context, 
-                      new MaterialPageRoute(
-                        builder: (context) => News()
-                      )
-                    );
+                    // Navigator.push(context, 
+                    //   new MaterialPageRoute(
+                    //     builder: (context) => News()
+                    //   )
+                    // );
                   },
                   child: buttonCard("Town", Icons.location_city),
                 )
