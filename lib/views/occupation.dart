@@ -12,12 +12,12 @@ class BusinessDirectory extends StatefulWidget {
 }
 class _BusinessDirectoryState extends State<BusinessDirectory> {
   Future<List<Professional>> _getUsers() async {
-    var data = await http.get('http://www.json-generator.com/api/json/get/bUQkuEOaaa?indent=2');
+    var data = await http.get('https://baladiyeh.joomla.com//submissions_businessdirectory.txt');
     var jsonData = json.decode(data.body);
     List<Professional> professionalsList = [];
     for (var professionalJson in jsonData) {
       Professional professional =
-          Professional(professionalJson['index'], professionalJson['address'], professionalJson['name'], professionalJson['email'], professionalJson['picture'],professionalJson['phone']);
+          Professional(int.parse(professionalJson['ID']), professionalJson['Address'], "${professionalJson['FirstName']} ${professionalJson['LastName']}", professionalJson['Profession'], professionalJson['Media'],professionalJson['PhoneNumber']);
       professionalsList.add(professional);
     }
     return professionalsList;
@@ -55,7 +55,7 @@ class _BusinessDirectoryState extends State<BusinessDirectory> {
                       ),
                     ),
                     title: Text(snapshot.data[index].name),
-                    subtitle: Text(snapshot.data[index].email),
+                    subtitle: Text(snapshot.data[index].phone),
                     onTap: (){
                       Navigator.push(context, new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index])));
                     },

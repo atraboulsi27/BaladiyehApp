@@ -17,9 +17,10 @@ class DetailPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CircleAvatar(
-              radius: 50.0,
+              radius: 80.0,
               backgroundImage: NetworkImage(user.picture),
             ),
+            SizedBox(height: 30,),
             Text(
               user.name,
               style: TextStyle(
@@ -57,11 +58,11 @@ class DetailPage extends StatelessWidget{
                 padding: EdgeInsets.all(1.0),
                 child: ListTile(
                   leading: Icon(
-                    Icons.email,
+                    Icons.work,
                     color: Colors.black,
                   ),
                   title: Text(
-                    user.email,
+                    user.profession,
                     style: TextStyle(
                       fontSize: 20.0,
                     ),
