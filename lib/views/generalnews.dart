@@ -10,12 +10,12 @@ class News extends StatefulWidget {
 }
 class _NewsState extends State<News> {
   Future<List<Article>> _getNews() async {
-    var data = await http.get('http://newsapi.org/v2/everything?q=corona&from=2020-03-24&sortBy=publishedAt&apiKey=7416c19f810740c0ae185eb497a7a4cc');
+    var data = await http.get('https://baladiyeh.joomla.com//submissions_news.txt');
     var jsonData = json.decode(data.body);
     List<Article> articles = [];
-    for (var u in jsonData['articles']) {
+    for (var u in jsonData) {
       Article article =
-          Article(u['source']['name'], u['title'], u['description'], u['url'], u['urlToImage'],u['publishedAt'],u['content']);
+          Article(u['Source'], u['Headline'], u['Details'], u['https://www.dead.com'], u['Media'],u['Date'],u['Details']);
       articles.add(article);
     }
     return articles;
