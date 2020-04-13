@@ -14,6 +14,9 @@ class _NewsState extends State<News> {
     var jsonData = json.decode(data.body);
     List<Article> articles = [];
     for (var u in jsonData) {
+      if ((u['Media'] is String) == false) {
+        u['Media'] = 'https://i.picsum.photos/id/685/300/200.jpg';
+      }
       Article article =
           Article(u['Source'], u['Headline'], u['Details'], u['https://www.dead.com'], u['Media'],u['Date'],u['Details']);
       articles.add(article);
