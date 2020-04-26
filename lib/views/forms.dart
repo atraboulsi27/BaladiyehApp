@@ -1,44 +1,17 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:baladiyeh/widgets/pdfViewer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 
-// Need to work on printing
 class Forms  extends StatefulWidget {
   @override
   _FormsState createState() => _FormsState();
 }
 class _FormsState extends State<Forms> {
-  Future<List<AppForm>> _getForms() async {
-    var data = await http.get('https://baladiyeh.joomla.com//submissions_forms.txt');
-    var jsonData = json.decode(data.body);
-    List<AppForm> forms = [];
-    for (var u in jsonData) {
-      AppForm form =
-          AppForm(u['Name'], u['File']);
-      forms.add(form);
-    }
-    return forms;
-  }
-  Future <File> getFilefromURL(String url) async {
-    try{
-      var data = await http.get(url);
-      var bytes = data.bodyBytes;
-      var dir = await getApplicationDocumentsDirectory();
-      File file = File('${dir.path}/form.pdf');
-      File urlFile = await file.writeAsBytes(bytes);
-      return urlFile;
-
-    } catch (e) {
-      throw Exception("Error opening url file");
-    }
-  }
 
   @override
   Widget build(BuildContext context){
@@ -54,31 +27,36 @@ class _FormsState extends State<Forms> {
           future: _getForms(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
-              return Container(child: Center(child: Text('Loading News . . . ')));
+              return Container(child: LinearProgressIndicator());
             } 
             else {
-              return ListView.separated(
+              return ListView.builder(
                 itemCount: snapshot.data.length,
-                padding: const EdgeInsets.all(20.0),
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      getFilefromURL(snapshot.data[index].pdf).then((p) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FullPdfViewerScreen(p.path, snapshot.data[index].title)),
-                        );
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(18.0),
-                      child: Text(snapshot.data[index].title),
+                  return Card(
+                    child: ListTile(
+                      onTap: (){
+                        getFilefromURL(snapshot.data[index].pdf).then((p) 
+                        {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(
+                              builder: (context) => FullPdfViewerScreen(p.path, snapshot.data[index].title, snapshot.data[index].pdf)
+                            )
+                          );
+                        });
+                      },
+                      title: Text(
+                        snapshot.data[index].title,
+                        style: TextStyle(
+                          fontSize: 18.0
+                        ),
+                      ),
+                      leading: Icon(Icons.picture_as_pdf),
                     ),
+                    elevation: 5.0,
+                    color: Colors.grey[50],
                   );
-                },
-                separatorBuilder: (context, index) {
-                  return Divider(color: Colors.grey);
                 },
               );
             }
@@ -87,9 +65,34 @@ class _FormsState extends State<Forms> {
       ),
     );
   }
+
+  Future<List<ApplicationForm>> _getForms() async {
+    var data = await http.get('https://baladiyeh.joomla.com//submissions_forms.txt');
+    var jsonData = json.decode(data.body);
+    List<ApplicationForm> forms = [];
+    for (var u in jsonData) {
+      ApplicationForm form = ApplicationForm(u['Name'], u['File']);
+      forms.add(form);
+    }
+    return forms;
+  }
+
+  Future <File> getFilefromURL(String url) async {
+    try{
+      var data = await http.get(url);
+      var bytes = data.bodyBytes;
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File('${dir.path}/form.pdf');
+      File urlFile = await file.writeAsBytes(bytes);
+      return urlFile;
+
+    } catch (e) {
+      throw Exception("Error opening url file");
+    }
+  }
 }
-class AppForm{
+class ApplicationForm{
   String title;
   String pdf;
-  AppForm(this.title, this.pdf);
+  ApplicationForm(this.title, this.pdf);
 }
