@@ -28,9 +28,9 @@ class _CalendarState extends State<Calendar> {
       body:SingleChildScrollView(
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TableCalendar(calendarController: _controller,)
-            ],
+          children: <Widget>[
+            TableCalendar(calendarController: _controller,)
+          ],
         ),
       )
     );
