@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Professional {
   final int index;
   final String address;

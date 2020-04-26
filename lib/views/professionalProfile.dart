@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:baladiyeh/classes/professional.dart';
 
@@ -10,25 +12,19 @@ class DetailPage extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
         title: Text(user.name),
-        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            CircleAvatar(
-              radius: 80.0,
-              backgroundImage: NetworkImage(user.picture),
+            SizedBox(height: 50,),
+            Container(
+              child: Image.network(user.picture),
+              width: 300,
+              height: 300,
             ),
-            SizedBox(height: 30,),
-            Text(
-              user.name,
-              style: TextStyle(
-                fontSize: 30.0,
-                color: Colors.blueAccent,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            SizedBox(height: 20,),
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
