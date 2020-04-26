@@ -8,10 +8,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'All Town App',
+      title: 'Municipality App',
       theme: Constants.lightTheme,
-      darkTheme: Constants.darkTheme,
-      home: MainPage()
+      home: MainPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
