@@ -16,8 +16,9 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Municipality Name"),
+          title: Text("Zgharta Municipality"),
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body:Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +32,7 @@ class _MainPageState extends State<MainPage> {
                   onTap:() {
                     Navigator.push(context, 
                       new MaterialPageRoute(
-                        builder: (context) => News()
+                        builder: (context) => News("General")
                       )
                     );
                   },
