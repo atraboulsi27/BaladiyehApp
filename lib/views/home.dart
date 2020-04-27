@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:baladiyeh/views/generalnews.dart';
 import 'package:baladiyeh/views/calendar.dart';
 import 'package:baladiyeh/views/forms.dart';
-import 'package:baladiyeh/views/occupation.dart';
+import 'package:baladiyeh/views/businessDirectory.dart';
 import 'package:baladiyeh/views/complaints.dart';
 import 'package:baladiyeh/views/settings.dart';
 import 'package:baladiyeh/widgets/buttonMenu.dart';
@@ -16,8 +16,9 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Municipality Name"),
+          title: Text("Zgharta Municipality"),
           centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body:Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +32,7 @@ class _MainPageState extends State<MainPage> {
                   onTap:() {
                     Navigator.push(context, 
                       new MaterialPageRoute(
-                        builder: (context) => News()
+                        builder: (context) => News("General")
                       )
                     );
                   },

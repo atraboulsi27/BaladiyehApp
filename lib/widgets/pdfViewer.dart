@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class FullPdfViewerScreen extends StatelessWidget {
   final String pdfPath;
   final String pdfName;
-  FullPdfViewerScreen(this.pdfPath, this.pdfName);
+  final String pdfUrl;
+  FullPdfViewerScreen(this.pdfPath, this.pdfName, this.pdfUrl);
+
+  Future<void> share() async {
+    await FlutterShare.share(
+        title: pdfName,
+        text: pdfName,
+        linkUrl: pdfUrl,
+        chooserTitle: pdfName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +22,16 @@ class FullPdfViewerScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           pdfName,
-          style: TextStyle(fontSize: 18),
         ),
         centerTitle:true,
         actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: Icon(
-                  Icons.share,
-              ),
-            )
-          ),
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: share,
+          )
         ],
       ),
       path: pdfPath

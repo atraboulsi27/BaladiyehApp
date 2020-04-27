@@ -1,10 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'home.dart';
+import 'articleNews.dart';
 
-// Need to work on specific news pages, maybe do a general page and pass parameters with news (i.e: News(tech) will display the tech news page)
 class News extends StatefulWidget {
+  final String category;
+  News(this.category);
   @override
   _NewsState createState() => _NewsState();
 }
@@ -18,24 +20,24 @@ class _NewsState extends State<News> {
         u['Media'] = 'https://i.picsum.photos/id/685/300/200.jpg';
       }
       Article article =
-          Article(u['Source'], u['Headline'], u['Details'], u['https://www.dead.com'], u['Media'],u['Date'],u['Details']);
+          Article(u['Source'], u['Headline'], u['Details'], u['https://www.dead.com'], u['Media'],u['Date'],u['Channel']);
       articles.add(article);
     }
     return articles;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'General News',
-          style:TextStyle(
-            fontSize:24.0,
-            color:Colors.white,
-          ),
+          '${widget.category} News',
         ),
         centerTitle:true,
-        backgroundColor: Colors.blueAccent,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color:Colors.white ,), 
+          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));},
+        ),
       ),
       endDrawer: Drawer(
         child: ListView(
@@ -50,43 +52,38 @@ class _NewsState extends State<News> {
             ListTile(
               title: Text("General"),
               trailing: Icon(Icons.library_books),
-              onTap: () {},
+              onTap: () {String category = "General";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
             ListTile(
               title: Text("Sports"),
               trailing: Icon(Icons.directions_run),
-              onTap: () {},
+              onTap: () {String category = "Sport";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
             ListTile(
               title: Text("Food"),
               trailing: Icon(Icons.fastfood),
-              onTap: () {},
+              onTap: () {String category = "Food";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
             ListTile(
               title: Text("Marriage"),
               trailing: Icon(Icons.people),
-              onTap: () {},
+              onTap: () {String category = "Marriage";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
             ListTile(
               title: Text("Environment"),
               trailing: Icon(Icons.public),
-              onTap: () => {},
+              onTap: () {String category = "Environment";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
             ListTile(
               title: Text("Technology"),
               trailing: Icon(Icons.laptop),
-              onTap: () => {},
+              onTap: () {String category = "Technology";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
             ListTile(
               title: Text("Emergency"),
               trailing: Icon(Icons.warning),
-              onTap: () => {},
+              onTap: () {String category = "Emergency";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
             ),
-            ListTile(
-              title: Text("Customise"),
-              trailing: Icon(Icons.playlist_add),
-              onTap: () => {},
-            )
           ],
         ),
       ),
@@ -96,31 +93,41 @@ class _NewsState extends State<News> {
             future: _getNews(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
-                return Container(child: Center(child: Text('Loading News . . . ')));
+                return Container(child: LinearProgressIndicator());
               } 
               else {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CustomListItemTwo(
-                      thumbnail: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(snapshot.data[index].image)
-                          )
-                        ),
-                      ),
-                      title: snapshot.data[index].title,
-                      description: snapshot.data[index].description,
-                      source: snapshot.data[index].source,
-                      publishDate: snapshot.data[index].date,
-                    );
+                    if (snapshot.data[index].category == widget.category) {
+                      return newsCard(snapshot.data[index]);
+                    }
+                    else if (widget.category == "General"){
+                      return newsCard(snapshot.data[index]);
+                    }
+                    else{
+                      return Container();
+                    }
                   },
                 );
               }
             },
           )
         ),         
+    );
+  }
+  Widget newsCard(Article article){
+    return Card(
+      elevation: 5.0,
+      color: Colors.grey[50],
+      child: ListTile(
+        title: Text(article.title),
+        subtitle: Text(article.description),
+        leading: Image.network(article.image),
+        isThreeLine: true,
+        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => ArticleDetail(article)));},
+        // trailing: Text(article.date),
+      ),
     );
   }
 }
@@ -131,164 +138,7 @@ class Article {
   final String url;
   final String image;
   final String date;
-  final String content;
-  Article(this.source, this.title, this.description, this.url, this.image, this.date, this.content);
+  final String category;
+  Article(this.source, this.title, this.description, this.url, this.image, this.date, this.category);
 }
-class ArticleDetail extends StatelessWidget{
-  final Article article;
-  ArticleDetail(this.article);
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(article.title),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              article.title,
-              style: TextStyle(
-                fontSize: 30.0,
-                color: Colors.blueAccent,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              article.description,
-            ),
-            Text(
-              article.content,
-            ),
-            Text(
-              article.date,
-            ),
-            Text(
-              article.source,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-class CustomListItemTwo extends StatelessWidget {
-  CustomListItemTwo({
-    Key key,
-    this.thumbnail,
-    this.title,
-    this.description,
-    this.source,
-    this.publishDate,
-  }) : super(key: key);
 
-  final Widget thumbnail;
-  final String title;
-  final String description;
-  final String source;
-  final String publishDate;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: SizedBox(
-        height: 100,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: thumbnail,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 2.0, 0.0),
-                child: _ArticleDescription(
-                  title: title,
-                  description: description,
-                  source: source,
-                  publishDate: publishDate,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-class _ArticleDescription extends StatelessWidget {
-  _ArticleDescription({
-    Key key,
-    this.title,
-    this.description,
-    this.source,
-    this.publishDate,
-  }) : super(key: key);
-
-  final String title;
-  final String description;
-  final String source;
-  final String publishDate;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                '$title',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-              Text(
-                '$description',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                '$source',
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black87,
-                ),
-              ),
-              Text(
-                '$publishDate',
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
