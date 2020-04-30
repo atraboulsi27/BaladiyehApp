@@ -6,6 +6,7 @@ import 'package:baladiyeh/views/businessDirectory.dart';
 import 'package:baladiyeh/views/complaints.dart';
 import 'package:baladiyeh/views/settings.dart';
 import 'package:baladiyeh/widgets/buttonMenu.dart';
+import 'municipalBoard.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -84,11 +85,11 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: GestureDetector(
                   onTap:() {
-                    // Navigator.push(context, 
-                    //   new MaterialPageRoute(
-                    //     builder: (context) => News()
-                    //   )
-                    // );
+                    Navigator.push(context, 
+                      new MaterialPageRoute(
+                        builder: (context) => MunicipalBoard()
+                      )
+                    );
                   },
                   child: buttonCard("Municipal Board", Icons.account_balance),
                 )
