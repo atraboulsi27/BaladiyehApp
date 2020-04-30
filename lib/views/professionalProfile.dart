@@ -20,7 +20,7 @@ class DetailPage extends StatelessWidget{
           children: <Widget>[
             SizedBox(height: 50,),
             Container(
-              child: Image.network(user.picture),
+              child: Image.network("http://baladiyeh.joomla.com/${user.picture}"),
               width: 300,
               height: 300,
             ),
