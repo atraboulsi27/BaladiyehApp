@@ -14,7 +14,7 @@ class ArticleDetail extends StatelessWidget{
       body: new Center(
         child: SingleChildScrollView(
           child: Html(
-            data: article.content,
+            data: "${article.headline} ${article.content}",
             padding: EdgeInsets.all(8.0),
             linkStyle: const TextStyle(
               color: Colors.blue,

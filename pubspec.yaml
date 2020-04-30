@@ -31,6 +31,7 @@ dependencies:
   flutter_share: ^1.0.2+1
   carousel_slider: ^2.0.0
   flutter_html: ^0.11.1
+  syncfusion_flutter_calendar: ^18.1.46-beta
 
 dev_dependencies:
   http: ^0.12.0
