@@ -13,7 +13,6 @@ class _ComplaintsState extends State<Complaints> {
   TextEditingController _textFieldController = TextEditingController();
   String _name;
   String _mobile;
-
   String _mail;
   String _pass;
   String _subject;
@@ -46,14 +45,14 @@ class _ComplaintsState extends State<Complaints> {
           child: new Form(
             key: _formKey,
             autovalidate: _autoValidate,
-            child: FormUI(),
+            child: form(),
           ),
         ),
       ),
     );
   }
 
-  Widget FormUI() {
+  Widget form() {
     return new Column(
       children: <Widget>[
         new TextFormField(
@@ -72,36 +71,6 @@ class _ComplaintsState extends State<Complaints> {
             _mobile = val;
           },
         ),
-        new DropdownButton<String>(
-          items: _complaints.map((String dropDownStringItem) {
-            return DropdownMenuItem<String>(
-              value: dropDownStringItem,
-              child: Text(dropDownStringItem),
-            );}).toList(),
-          onChanged: (String newValueSelected) {
-            _onDropDownItemSelected(newValueSelected);
-            _subject = newValueSelected;
-          },
-          value: _currentItemSelecetd,
-        ),
-        new TextField(
-          controller: _textFieldController,
-          keyboardType: TextInputType.multiline,
-          maxLines: 5,
-        ),
-        new SizedBox(
-          height: 10.0,
-        ),
-        new RaisedButton(
-          onPressed: _validateInputs,
-          child: new Text('Validate'),
-        ),
-
-
-        // Temporary
-        new SizedBox(
-          height: 20.0,
-        ),
         new TextFormField(
           decoration: const InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
@@ -117,9 +86,36 @@ class _ComplaintsState extends State<Complaints> {
             _pass = val;
           },
         ),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text("Complaint Type: ", style: TextStyle(fontSize: 18)),
+            new DropdownButton<String>(
+              items: _complaints.map((String dropDownStringItem) {
+                return DropdownMenuItem<String>(
+                  value: dropDownStringItem,
+                  child: Text(dropDownStringItem),
+                );}).toList(),
+              onChanged: (String newValueSelected) {
+                _onDropDownItemSelected(newValueSelected);
+                _subject = newValueSelected;
+              },
+              value: _currentItemSelecetd,
+            ),
+          ],
+        ),
+        new TextField(
+          controller: _textFieldController,
+          keyboardType: TextInputType.multiline,
+          maxLines: 5,
+          decoration: const InputDecoration(labelText: 'Type in your complaint details', alignLabelWithHint: true),
+        ),
+        new SizedBox(
+          height: 10.0,
+        ),
         new RaisedButton(
           onPressed: () async {
-            _formKey.currentState.save();
+            _validateInputs();
             await sendMail(_mail, _pass, _subject, _textFieldController.text, _name, _mobile);
           },
           child: new Text('Send Complaint'),
@@ -159,7 +155,7 @@ class _ComplaintsState extends State<Complaints> {
       return null;
   }
 
-  Future<List> sendMail(mail, password, subject, content, name, phone) async {
+  Future sendMail(mail, password, subject, content, name, phone) async {
 
     final smtpServer = gmail(mail, password); 
 
@@ -167,14 +163,20 @@ class _ComplaintsState extends State<Complaints> {
       ..from = Address(mail)
       ..recipients.add('charbel.g.frangieh@gmail.com')
       ..subject = subject
-      ..text = '$content \nBest Regards \n$name \n$phone \n${DateTime.now()}';
+      ..text = '$content \n\n\nBest Regards \n$name \n$phone \n${DateTime.now()}';
 
     try {
       final sendReport = await send(message, smtpServer);
-      print('Message sent: ' + sendReport.toString()); //print if the email is sent
+      print('Message sent: ' + sendReport.toString());//print if the email is sent
+      return AlertDialog(
+        content: Text("Message Successful"),
+      );
     } on MailerException catch (e) {
       print('Message not sent. \n'+ e.toString()); //print if the email is not sent
       // e.toString() will show why the email is not sending
+      return AlertDialog(
+        content: Text("Message Unsuccessful"),
+      );
     }
   } 
 
