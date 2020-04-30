@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:baladiyeh/views/generalnews.dart';
+import 'package:baladiyeh/classes/article.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ArticleDetail extends StatelessWidget{
