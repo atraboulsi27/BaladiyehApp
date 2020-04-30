@@ -106,12 +106,12 @@ class _BusinessDirectoryState extends State<BusinessDirectory> {
   }
 
   Future<List<Professional>> _getUsers() async {
-    var data = await http.get('https://baladiyeh.joomla.com//submissions_businessdirectory.txt');
+    var data = await http.get('http://baladiyeh.joomla.com//business_directory.php');
     var jsonData = json.decode(data.body);
     List<Professional> professionalsList = [];
     for (var professionalJson in jsonData) {
       Professional professional =
-          Professional(int.parse(professionalJson['ID']), professionalJson['Address'], "${professionalJson['FirstName']} ${professionalJson['LastName']}", professionalJson['Profession'], professionalJson['Media'],professionalJson['PhoneNumber']);
+          Professional(int.parse(professionalJson['ID']), professionalJson['Address'], professionalJson['fullname'], professionalJson['Profession'], professionalJson['image'],professionalJson['phone']);
       professionalsList.add(professional);
     }
     return professionalsList;
@@ -124,7 +124,7 @@ class _BusinessDirectoryState extends State<BusinessDirectory> {
       child: ListTile(
         title: Text(person.name),
         subtitle: Text(person.phone),
-        leading: person.picture == null || person.picture == '' ? Image.asset('assets/images/profile.jpg'): Image.network(person.picture),
+        leading: person.picture == null || person.picture == '' ? Image.asset('assets/images/profile.jpg'): Image.network("http://baladiyeh.joomla.com/${person.picture}"),
         onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(person)));},
       ),
     );
