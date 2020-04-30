@@ -1,3 +1,4 @@
+import 'package:baladiyeh/views/town.dart';
 import 'package:flutter/material.dart';
 import 'package:baladiyeh/views/generalnews.dart';
 import 'package:baladiyeh/views/calendar.dart';
@@ -115,11 +116,11 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: GestureDetector(
                   onTap:() {
-                    // Navigator.push(context, 
-                    //   new MaterialPageRoute(
-                    //     builder: (context) => News()
-                    //   )
-                    // );
+                    Navigator.push(context, 
+                      new MaterialPageRoute(
+                        builder: (context) => TownPage()
+                      )
+                    );
                   },
                   child: buttonCard("Town", Icons.location_city),
                 )

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'home.dart';
 import 'articleNews.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:baladiyeh/classes/article.dart';
 
 
 class News extends StatefulWidget {
@@ -67,52 +68,6 @@ class _NewsState extends State<News> {
             }
           },
         ),
-        // child: ListView(
-        //   children: <Widget>[
-        //     DrawerHeader(
-        //         padding: const EdgeInsets.all(0.0),
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //             color: Colors.blueAccent,
-        //           ),
-        //         )),
-            // ListTile(
-            //   title: Text("General"),
-            //   trailing: Icon(Icons.library_books),
-            //   onTap: () {String category = "General";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-            // ),
-        //     ListTile(
-        //       title: Text("Sports"),
-        //       trailing: Icon(Icons.directions_run),
-        //       onTap: () {String category = "Sport";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-        //     ),
-        //     ListTile(
-        //       title: Text("Food"),
-        //       trailing: Icon(Icons.fastfood),
-        //       onTap: () {String category = "Food";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-        //     ),
-        //     ListTile(
-        //       title: Text("Marriage"),
-        //       trailing: Icon(Icons.people),
-        //       onTap: () {String category = "Marriage";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-        //     ),
-        //     ListTile(
-        //       title: Text("Environment"),
-        //       trailing: Icon(Icons.public),
-        //       onTap: () {String category = "Environment";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-        //     ),
-        //     ListTile(
-        //       title: Text("Technology"),
-        //       trailing: Icon(Icons.laptop),
-        //       onTap: () {String category = "Technology";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-        //     ),
-        //     ListTile(
-        //       title: Text("Emergency"),
-        //       trailing: Icon(Icons.warning),
-        //       onTap: () {String category = "Emergency";Navigator.push(context, MaterialPageRoute(builder: (context) => News(category)));},
-        //     ),
-        //   ],
-        // ),
       ),
       body:
         Container(
@@ -156,12 +111,3 @@ class _NewsState extends State<News> {
     );
   }
 }
-class Article {
-  final String id;
-  final String title;
-  final String headline;
-  final String content;
-  final String category;
-  Article(this.id, this.title, this.headline, this.content, this.category);
-}
-

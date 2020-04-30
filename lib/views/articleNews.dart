@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:baladiyeh/views/generalnews.dart';
+import 'package:baladiyeh/classes/article.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ArticleDetail extends StatelessWidget{
@@ -9,7 +9,7 @@ class ArticleDetail extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("${article.category} News"),
+        title: Text("${article.category}"),
       ),
       body: new Center(
         child: SingleChildScrollView(
