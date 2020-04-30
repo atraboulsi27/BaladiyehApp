@@ -9,7 +9,7 @@ class ArticleDetail extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text("${article.category} News"),
+        title: Text("${article.category}"),
       ),
       body: new Center(
         child: SingleChildScrollView(
