@@ -1,3 +1,4 @@
+import 'package:baladiyeh/views/taxes.dart';
 import 'package:baladiyeh/views/town.dart';
 import 'package:flutter/material.dart';
 import 'package:baladiyeh/views/generalnews.dart';
@@ -56,11 +57,11 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: GestureDetector(
                   onTap:() {
-                    // Navigator.push(context, 
-                    //   new MaterialPageRoute(
-                    //     builder: (context) => Forms()
-                    //   )
-                    // );
+                    Navigator.push(context, 
+                      new MaterialPageRoute(
+                        builder: (context) => Taxes()
+                      )
+                    );
                   },
                   child: buttonCard("Taxes", Icons.monetization_on),
                 )
